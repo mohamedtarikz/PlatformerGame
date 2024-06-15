@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://bujhqtwaiskse"]
+
+[ext_resource type="Texture2D" uid="uid://bm2c7vcy5jcrc" path="res://Assets/sprites/slime_green.png" id="1_7tm6q"]
+[ext_resource type="Script" path="res://Scripts/enemychar.gd" id="1_etsib"]
+[ext_resource type="PackedScene" uid="uid://cpfsj8rsu7tp1" path="res://Scenes/kill_zone.tscn" id="2_h3lqf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slseo"]
+atlas = ExtResource("1_7tm6q")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lfaw"]
+atlas = ExtResource("1_7tm6q")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwfle"]
+atlas = ExtResource("1_7tm6q")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxrer"]
+atlas = ExtResource("1_7tm6q")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4kokr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slseo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1lfaw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwfle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xxrer")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wqjel"]
+size = Vector2(10, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pvg31"]
+size = Vector2(10, 11)
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_etsib")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4kokr")
+autoplay = "default"
+frame = 3
+frame_progress = 0.151763
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_wqjel")
+
+[node name="KillZone" parent="." instance=ExtResource("2_h3lqf")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_pvg31")
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(0, 5)
+target_position = Vector2(11, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, 5)
+target_position = Vector2(-11, 0)
+
+[node name="RayCastDown" type="RayCast2D" parent="."]
+position = Vector2(0, 5)
+target_position = Vector2(0, 8)
